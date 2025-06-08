@@ -14,4 +14,3 @@ app.add_middleware(
 @app.get("/")
 async def start():
     return {"message" : "Server is working!"}
-39569730

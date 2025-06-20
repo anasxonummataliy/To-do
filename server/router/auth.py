@@ -3,10 +3,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.session import get_db
-from schemas.auth import RegisRequest, LogisRequest
+from schemas.auth import RegisRequest, LoginRequest
 from database.models.users import Users
 from security.hash import hash_password
 from security.jwt import create_jwt_token, verify_jwt_token
+
+
 router = APIRouter(
     prefix="/auth",
     tags=['auth']
@@ -37,3 +39,6 @@ async def register(user_data: RegisRequest, db: AsyncSession = Depends(get_db)):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Server xatoligi {str(e)}")
+
+@router.post("/login")
+async def login(user_data : LoginRequest, db : AsyncSession = Depends(get_db)) :

@@ -7,6 +7,6 @@ class RegisRequest(BaseModel):
     email : EmailStr
     password : str
 
-class LogisRequest(BaseModel):
+class LoginRequest(BaseModel):
     email : EmailStr
     password : str

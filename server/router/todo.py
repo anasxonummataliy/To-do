@@ -7,7 +7,7 @@ from schemas.todo import CreateTodo
 from server.database.session import get_db
 
 router = APIRouter(
-    prefix='/todo',
+    prefix='/todos',
     tags=['Todo']
 )
 
@@ -34,4 +34,8 @@ async def incomplete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
 
 @router.post('/{todo_id}/incomplete')
 async def incomplete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
+    pass
+
+@router.patch('/{todo_id}/set-deadline')
+async def deadline_todo( todo : CreateTodo, db : AsyncSession = Depends(get_db)):
     pass

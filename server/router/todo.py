@@ -27,3 +27,11 @@ async def delete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
 @router.post('/{todo_id}/complete')
 async def complete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
     pass
+
+@router.post('/{todo_id}/incomplete')
+async def incomplete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
+    pass
+
+@router.post('/{todo_id}/incomplete')
+async def incomplete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
+    pass

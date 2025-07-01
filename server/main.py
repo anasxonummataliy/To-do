@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-
+from router.auth import router as auth_router
+from router.todo import router as todo_router
 
 app = FastAPI()
 app.add_middleware(
@@ -14,3 +15,6 @@ app.add_middleware(
 @app.get("/")
 async def start():
     return {"message" : "Server is working!"}
+
+app.include_router(auth_router)
+app.include_router(todo_router)

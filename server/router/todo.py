@@ -4,4 +4,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.models.todo import Todo
 from schemas.todo import CreateTodo
+from server.database.session import get_db
 
+router = APIRouter(
+    prefix='/todo',
+    tags=['Todo']
+)
+
+
+@router.post('')
+async def create_todo(todo: Todo, db: AsyncSession = Depends(get_db)):
+    

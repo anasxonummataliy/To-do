@@ -13,17 +13,17 @@ router = APIRouter(
 
 
 @router.post('')
-async def create_todo(todo: Todo, db: AsyncSession = Depends(get_db)):
+async def create_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
     pass
 
 @router.post('/change')
-async def change_todo( todo : Todo, db : AsyncSession = Depends(get_db)):
+async def change_todo( todo : CreateTodo , db : AsyncSession = Depends(get_db)):
     pass
 
 @router.delete('/delete')
-async def delete_todo( todo : Todo, db : AsyncSession = Depends(get_db)):
+async def delete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
     pass
 
 @router.post('/{todo_id}/complete')
-async def complete_todo( todo : Todo, db : AsyncSession = Depends(get_db))
+async def complete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
     pass

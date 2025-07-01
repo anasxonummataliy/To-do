@@ -14,4 +14,8 @@ router = APIRouter(
 
 @router.post('')
 async def create_todo(todo: Todo, db: AsyncSession = Depends(get_db)):
-    
+    pass
+
+@router.post('/change')
+async def change_todo( todo : Todo, db : AsyncSession = Depends(get_db)):
+    pass

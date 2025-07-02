@@ -1,4 +1,4 @@
-from database.session import async_engine
+from server.database.session import async_engine
 from sqlalchemy import Column, DateTime, func
 from sqlalchemy.orm import DeclarativeBase, declared_attr
 

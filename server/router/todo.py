@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.models.todo import Todo
-from schemas.todo import CreateTodo
+from server.database.models.todo import Todo
+from server.schemas.todo import CreateTodo
 from server.database.session import get_db
 
 router = APIRouter(
@@ -12,9 +12,10 @@ router = APIRouter(
 )
 
 
-@router.post('')
+@router.post('', response_model=Todo)
 async def create_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
-    pass
+    new_todo = Todo(**todo.model_dump())
+    return new_todo
 
 
 @router.get('/all')

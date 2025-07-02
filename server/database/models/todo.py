@@ -1,6 +1,6 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Boolean
 
-from database.base import Base
+from server.database.base import Base
 
 class Todo(Base):
     __tablename__ = "todos"
@@ -8,4 +8,6 @@ class Todo(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=True)
     description = Column(String, nullable=True )
+    completed = Column(Boolean, nullable=True)
+
 

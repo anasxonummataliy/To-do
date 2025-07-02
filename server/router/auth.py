@@ -11,7 +11,7 @@ from server.security.jwt import create_jwt_token, verify_jwt_token
 
 router = APIRouter(
     prefix="/auth",
-    tags=['auth']
+    tags=['Auth']
 )
 
 

@@ -16,6 +16,11 @@ router = APIRouter(
 async def create_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
     pass
 
+
+@router.get('/all')
+async def all_todos(db: AsyncSession = Depends(get_db)):
+    pass
+
 @router.post('/change')
 async def change_todo( todo : CreateTodo , db : AsyncSession = Depends(get_db)):
     pass
@@ -29,13 +34,10 @@ async def complete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
     pass
 
 @router.post('/{todo_id}/incomplete')
-async def incomplete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
-    pass
-
-@router.post('/{todo_id}/incomplete')
-async def incomplete_todo(todo: CreateTodo, db: AsyncSession = Depends(get_db)):
+async def incomplete_todo(db: AsyncSession = Depends(get_db)):
     pass
 
 @router.patch('/{todo_id}/set-deadline')
-async def deadline_todo( todo : CreateTodo, db : AsyncSession = Depends(get_db)):
+async def deadline_todo(db : AsyncSession = Depends(get_db)):
     pass
+

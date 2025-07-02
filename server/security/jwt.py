@@ -1,7 +1,7 @@
 import jwt
 from datetime import  datetime, timedelta
-from utils.config import settings
 from fastapi import HTTPException
+from server.utils.config import settings
 
 SECRET_KEY = settings.jwt_secret  
 ALGORITHM = "HS256"

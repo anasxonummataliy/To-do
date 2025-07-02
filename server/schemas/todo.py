@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 
-class CreateTodo(BaseModel):
-    title : str
-    description : str | None = None
-    completed : bool
+
+class TodoCreate(BaseModel):
+    id: int
+    title: str
+    description: str
+    is_completed: bool
+
+    class Config:
+        orm_mode = True

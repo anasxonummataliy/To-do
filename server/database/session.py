@@ -3,7 +3,7 @@ from typing import AsyncGenerator
 
 from server.utils.config import settings
 
-async_engine = create_async_engine(settings.db_url)
+async_engine = create_async_engine(settings.db_url, echo=True)
 
 
 SessionLocal = async_sessionmaker(

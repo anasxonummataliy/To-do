@@ -36,7 +36,7 @@ async def update_todo(todo_id: int ,todo_data : TodoUpdate, db: AsyncSession = D
     result = todo.scalar_one_or_none()
 
     if not result:
-        raise HTTPException(detail="Todo topilmadi", status_code=404)
+        raise HTTPException(detail="Todo not found!", status_code=404)
     
     data = todo_data.model_dump(exclude_unset=True).items()
     for key, value in data:
@@ -47,10 +47,18 @@ async def update_todo(todo_id: int ,todo_data : TodoUpdate, db: AsyncSession = D
 
     return result
 
-@router.delete('/delete')
-async def delete_todo(db: AsyncSession = Depends(get_db)):
-    pass
+@router.delete('{todo_id}/delete')
+async def delete_todo(todo_id : int ,db: AsyncSession = Depends(get_db)):
+    smtm = select(Todo).where(todo_id == Todo.id)
+    result = await db.execute(smtm)
+    todo = result.scalar_one_or_none()
 
+    if not todo :
+        raise HTTPException( status_code=404, detail="Todo not found!")
+    
+    await db.delete(todo)
+    await db.commit()
+    
 @router.post('/{todo_id}/complete')
 async def complete_todo( db: AsyncSession = Depends(get_db)):
     pass

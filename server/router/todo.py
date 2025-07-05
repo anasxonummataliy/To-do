@@ -3,8 +3,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from server.database.models.todo import Todo
-from server.schemas.todo import TodoCreate, TodoUpdate, Todo, 
+from server.database.models.todo import TodoDB
+from server.schemas.todo import TodoCreate, TodoUpdate, TodoResponse, DeadlineUpdate
 from server.database.session import get_db
 
 router = APIRouter(
@@ -15,23 +15,23 @@ router = APIRouter(
 
 @router.post('', response_model=TodoCreate)
 async def create_todo(todo: TodoCreate, db: AsyncSession = Depends(get_db)):
-    new_todo = Todo(**todo.model_dump())
+    new_todo = TodoDB(**todo.model_dump())
     db.add(new_todo)
     await db.commit()
     await db.refresh(new_todo)
     return new_todo
 
 
-@router.get('/all', response_model=List[Todo])
+@router.get('/all', response_model=List[TodoResponse])
 async def all_todos(db: AsyncSession = Depends(get_db)):
-    stmt = select(Todo)
+    stmt = select(TodoDB)
     todos = await db.execute(stmt)
     result = todos.scalars().all()
     return result
 
-@router.patch('/{todo_id}/update', response_model=Todo)
+@router.patch('/{todo_id}/update', response_model=TodoResponse)
 async def update_todo(todo_id: int ,todo_data : TodoUpdate, db: AsyncSession = Depends(get_db)):
-    stmt = select(Todo).where(todo_id == Todo.id)
+    stmt = select(TodoDB).where(todo_id == TodoDB.id)
     todo = await db.execute(stmt)
     result = todo.scalar_one_or_none()
 
@@ -49,7 +49,7 @@ async def update_todo(todo_id: int ,todo_data : TodoUpdate, db: AsyncSession = D
 
 @router.delete('{todo_id}/delete')
 async def delete_todo(todo_id : int ,db: AsyncSession = Depends(get_db)):
-    smtm = select(Todo).where(todo_id == Todo.id)
+    smtm = select(TodoDB).where(todo_id == TodoDB.id)
     result = await db.execute(smtm)
     todo = result.scalar_one_or_none()
 
@@ -61,7 +61,7 @@ async def delete_todo(todo_id : int ,db: AsyncSession = Depends(get_db)):
     
 @router.post('/{todo_id}/complete')
 async def complete_todo( todo_id : int , db: AsyncSession = Depends(get_db)):
-    stmt = select(Todo).where(Todo.id == todo_id)
+    stmt = select(TodoDB).where(TodoDB.id == todo_id)
     todo = await db.execute(stmt)
     result = todo.scalar_one_or_none()
 
@@ -74,7 +74,16 @@ async def complete_todo( todo_id : int , db: AsyncSession = Depends(get_db)):
 async def incomplete_todo(db: AsyncSession = Depends(get_db)):
     pass
 
-@router.patch('/{todo_id}/set-deadline')
-async def deadline_todo(db : AsyncSession = Depends(get_db)):
-    pass
+
+@router.patch("/{todo_id}/set-deadline")
+async def deadline_todo(todo_id: int, deadline_data: DeadlineUpdate, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(TodoModel).where(TodoModel.id == todo_id))
+    todo = result.scalar_one_or_none()
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    todo.deadline = deadline_data.deadline
+    await db.commit()
+    await db.refresh(todo)
+    return {"detail": "Deadline set successfully"}
 

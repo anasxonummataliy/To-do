@@ -12,7 +12,7 @@ class TodoUpdate(BaseModel):
     description: Optional[str] = None
     completed: Optional[bool] = None
 
-class Todo(BaseModel):
+class TodoResponse(BaseModel):
     id : int 
     title : str
     description : Optional[str] = None

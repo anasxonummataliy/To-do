@@ -60,24 +60,34 @@ async def delete_todo(todo_id : int ,db: AsyncSession = Depends(get_db)):
     await db.commit()
     
 @router.post('/{todo_id}/complete')
-async def complete_todo( todo_id : int , db: AsyncSession = Depends(get_db)):
-    stmt = select(TodoDB).where(TodoDB.id == todo_id)
-    todo = await db.execute(stmt)
-    result = todo.scalar_one_or_none()
-
+async def complete_todo(todo_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(TodoDB).where(TodoDB.id == todo_id))
+    todo = result.scalar_one_or_none()
     if not todo:
-        raise HTTPException(status_code=404, detail="Todo not found!")
-    
+        raise HTTPException(status_code=404, detail="Todo not found")
+
     todo.completed = True
+    await db.commit()
+    await db.refresh(todo)
+    return {"detail": "Marked as completed"}
 
 @router.post('/{todo_id}/incomplete')
-async def incomplete_todo(db: AsyncSession = Depends(get_db)):
-    pass
+async def incomplete_todo(todo_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(TodoDB).where(TodoDB.id == todo_id))
+    todo = result.scalar_one_or_none()
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    todo.completed = False
+    await db.commit()
+    await db.refresh(todo)
+    return {"detail": "Marked as incomplete"}
 
 
 @router.patch("/{todo_id}/set-deadline")
 async def deadline_todo(todo_id: int, deadline_data: DeadlineUpdate, db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(TodoModel).where(TodoModel.id == todo_id))
+    result = await db.execute(select(TodoDB).where(TodoDB
+                                                   .id == todo_id))
     todo = result.scalar_one_or_none()
     if not todo:
         raise HTTPException(status_code=404, detail="Todo not found")

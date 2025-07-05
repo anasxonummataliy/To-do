@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from server.database.models.todo import Todo
-from server.schemas.todo import TodoCreate, TodoUpdate
+from server.schemas.todo import TodoCreate, TodoUpdate, Todo, 
 from server.database.session import get_db
 
 router = APIRouter(
@@ -60,8 +60,15 @@ async def delete_todo(todo_id : int ,db: AsyncSession = Depends(get_db)):
     await db.commit()
     
 @router.post('/{todo_id}/complete')
-async def complete_todo( db: AsyncSession = Depends(get_db)):
-    pass
+async def complete_todo( todo_id : int , db: AsyncSession = Depends(get_db)):
+    stmt = select(Todo).where(Todo.id == todo_id)
+    todo = await db.execute(stmt)
+    result = todo.scalar_one_or_none()
+
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found!")
+    
+    todo.completed = True
 
 @router.post('/{todo_id}/incomplete')
 async def incomplete_todo(db: AsyncSession = Depends(get_db)):

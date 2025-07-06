@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-@router.post('', response_model=TodoCreate)
+@router.post('', response_model=TodoResponse)
 async def create_todo(todo: TodoCreate, db: AsyncSession = Depends(get_db)):
     new_todo = TodoDB(**todo.model_dump())
     db.add(new_todo)

@@ -30,9 +30,9 @@ async def all_todos(db: AsyncSession = Depends(get_db)):
     return result
 
 
-@router.patch('/{todo_id}/update', response_model=TodoResponse)
+@router.patch('/{todo_id}', response_model=TodoResponse)
 async def update_todo(todo_id: int, todo_data: TodoUpdate, db: AsyncSession = Depends(get_db)):
-    stmt = select(TodoDB).where(todo_id == TodoDB.id)
+    stmt = select(TodoDB).where(TodoDB.id == todo_id )
     todo = await db.execute(stmt)
     result = todo.scalar_one_or_none()
 
@@ -49,9 +49,9 @@ async def update_todo(todo_id: int, todo_data: TodoUpdate, db: AsyncSession = De
     return result
 
 
-@router.delete('{todo_id}/delete')
+@router.delete('/{todo_id}')
 async def delete_todo(todo_id: int, db: AsyncSession = Depends(get_db)):
-    smtm = select(TodoDB).where(todo_id == TodoDB.id)
+    smtm = select(TodoDB).where(TodoDB.id == todo_id)
     result = await db.execute(smtm)
     todo = result.scalar_one_or_none()
 
@@ -60,6 +60,7 @@ async def delete_todo(todo_id: int, db: AsyncSession = Depends(get_db)):
 
     await db.delete(todo)
     await db.commit()
+    return {"detail" : "Todo deleted"}
 
 
 @router.post('/{todo_id}/complete')

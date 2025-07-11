@@ -12,10 +12,11 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto ; 
+    background-color: #1881cc;
 }
 form {
-    width: 400px;
-    height: 500px;
+    width: 500px;
+    height: 400px;
     border: 1px solid;
     margin:  auto;
     display: flex;
@@ -23,7 +24,25 @@ form {
     align-items: center;
     justify-content: center;
     gap: 30px;
+    background-color: #fff;
+    padding: 60px;
+}
+input{
+    border: none;
+    border-bottom: 1px solid #1881cc;
+    width: 100%;
+    outline: none;
+    padding: 8px;
+    font-size: 20px;
 }
 div{
-
+    width: 100%;
+}
+a{
+    text-decoration: none;
+    color: #1881cc;
+}
+input[type="submit"]{
+    width: 50%;
+    align-items: center;
 }

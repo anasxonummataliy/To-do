@@ -11,7 +11,6 @@ body {
     color: #333;
 }
 
-/* Loading Spinner */
 .loading {
     position: fixed;
     top: 0;
@@ -44,7 +43,6 @@ body {
     }
 }
 
-/* Utility Classes */
 .hidden {
     display: none !important;
 }
@@ -57,7 +55,6 @@ body {
     flex: 2;
 }
 
-/* Auth Container */
 .auth-container {
     display: flex;
     justify-content: center;
@@ -133,7 +130,6 @@ body {
     text-align: left;
 }
 
-/* Buttons */
 .btn {
     padding: 15px 30px;
     border: none;
@@ -203,7 +199,6 @@ body {
     text-decoration: underline;
 }
 
-/* App Container */
 .app-container {
     min-height: 100vh;
     background: #f8f9fa;
@@ -240,14 +235,12 @@ body {
     color: #333;
 }
 
-/* Main Content */
 .main-content {
     max-width: 1200px;
     margin: 0 auto;
     padding: 30px 20px;
 }
 
-/* Add Todo Section */
 .add-todo-section {
     margin-bottom: 30px;
 }
@@ -280,7 +273,6 @@ body {
     padding-left: 15px;
 }
 
-/* Filter Section */
 .filter-section {
     display: flex;
     justify-content: space-between;

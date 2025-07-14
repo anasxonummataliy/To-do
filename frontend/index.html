@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+    </div>
+    <div id="auth-container" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1><i class="fas fa-tasks"></i> Todo App</h1>
+                <p>Manage your tasks efficiently</p>
+            </div>
+
+            <div id="login-form" class="auth-form">
+                <h2>Welcome Back</h2>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+                <p class="auth-switch">
+                    Don't have an account?
+                    <a href="#" id="showRegister">Sign up</a>
+                </p>
+            </div>
+
+            <div id="register-form" class="auth-form hidden">
+                <h2>Create Account</h2>
+                <form id="registerForm">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="registerName" placeholder="Full Name">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="registerEmail" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="registerPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                </form>
+                <p class="auth-switch">
+                    Already have an account?
+                    <a href="#" id="showLogin">Sign in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="app-container" class="app-container hidden">
+        <header class="app-header">
+            <div class="header-content">
+                <h1><i class="fas fa-tasks"></i> My Todos</h1>
+                <div class="user-info">
+                    <span id="userName">Welcome!</span>
+                    <button id="logoutBtn" class="btn btn-secondary">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="add-todo-section">
+                <div class="add-todo-card">
+                    <h3><i class="fas fa-plus"></i> Add New Todo</h3>
+                    <form id="addTodoForm">
+                        <div class="form-row">
+                            <div class="input-group flex-1">
+                                <input type="text" id="todoTitle" placeholder="Todo title" required>
+                            </div>
+                            <div class="input-group flex-2">
+                                <input type="text" id="todoDescription" placeholder="Description">
+                            </div>
+                            <div class="input-group">
+                                <input type="datetime-local" id="todoDeadline">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-list"></i> All
+                    </button>
+                    <button class="filter-btn" data-filter="pending">
+                        <i class="fas fa-clock"></i> Pending
+                    </button>
+                    <button class="filter-btn" data-filter="completed">
+                        <i class="fas fa-check"></i> Completed
+                    </button>
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search todos...">
+                </div>
+            </div>
+
+            <div class="todos-section">
+                <div id="todosList" class="todos-list">
+                </div>
+                <div id="emptyState" class="empty-state hidden">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>No todos yet</h3>
+                    <p>Create your first todo to get started!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Todo</h3>
+                <button class="close-btn" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editTodoForm">
+                <div class="input-group">
+                    <label>Title</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+                <div class="input-group">
+                    <label>Description</label>
+                    <textarea id="editDescription" rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Deadline</label>
+                    <input type="datetime-local" id="editDeadline">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

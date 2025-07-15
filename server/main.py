@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi.security import HTTPBearer
-from server.database.base import Base, create_db_and_tables
+from server.database.base import create_db_and_tables
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
